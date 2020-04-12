@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 
@@ -24,7 +24,7 @@ clearQuery = () => {
 }
 
     render() {
-        const {contacts , deleteContact} = this.props
+        const { contacts , deleteContact, onNavigate } = this.props
         const query = this.state.query
 
         const filterContacts = this.state.query === '' ? contacts : contacts.filter( (c) => (c.name.toLowerCase().includes(query.toLowerCase())))
@@ -34,6 +34,7 @@ clearQuery = () => {
         <div className='list-contacts'>
             <div className='list-contacts-top'>
                 <input className='search-contacts' type='text' placeholder='Search Contacts' value={query} onChange={(event) => this.updateQuery(event.target.value)} />
+                <a href="#create" className="add-contact" onClick={onNavigate}>Add Contact</a>
             </div>
             <div>
                 {filterContacts.length !== contacts.length && (
