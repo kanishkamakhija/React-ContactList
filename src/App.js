@@ -23,11 +23,26 @@ class App extends Component {
      ContactsAPI.remove(contact);
   };
 
+  createContact = (contact) => {
+    ContactsAPI.create(contact)
+      .then((contact) => {
+        this.setState((currState) => ({contacts : [...currState, contact]}))
+      });
+  }
+
+  // this.setState((currentState) => ({
+  //   contacts: currentState.contacts.concat([contact])
+  // }))
   render() {
     return (
       <div>
-          <Route exact path='/' render={() => (<ListContacts contacts={this.state.contacts} deleteContact={this.deleteContact}/>)} />
-        <Route path='/create' component={CreateContacts} />
+        <Route exact path='/' render={() => (<ListContacts contacts={this.state.contacts} deleteContact={this.deleteContact}/>)} />
+        <Route path='/create' render={({ history }) => (
+          <CreateContacts onCreateContact={(contact) => {
+              this.createContact(contact)
+              history.push('/')
+          }} />
+        )} />
       </div>
     )
   }
